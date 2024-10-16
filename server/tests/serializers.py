@@ -2,15 +2,7 @@ from rest_framework import serializers
 from .models import Answer, Question, Test
 
 
-class TestSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Test
-        fileds = ["title"]
-
-
 class AnswerSerialier(serializers.ModelSerializer):
-
     class Meta:
         model = Answer
         fields = ["answer", "correctnes"]
@@ -29,4 +21,10 @@ class QuestionSerializer(serializers.ModelSerializer):
             raise ValueError("Question must have at least one correct answer")
         return super().validate(attrs)
     
+
+class TestSerializer(serializers.ModelSerializer):
+    question = QuestionSerializer
+    class Meta:
+        model = Test
+        fileds = ["title"]
 
